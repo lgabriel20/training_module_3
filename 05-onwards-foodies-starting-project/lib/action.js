@@ -3,11 +3,11 @@
 import { redirect } from 'next/navigation';
 import { saveMeal } from "./meals";
 
-function isInvalidTest(text) {
+function isInvalidText(text) {
   return !text || text.trim() === '';
 }
 
-export async function ShareMeal(formData) {
+export async function shareMeal(prevState, formData) {
   const meal = {
     title: formData.get('title'),
     summary: formData.get('summary'),
@@ -27,7 +27,9 @@ export async function ShareMeal(formData) {
     !meal.image ||
     meal.image.size === 0
   ) {
-    throw new Error('Invalid input');
+    return {
+      message: 'Invalid input.',
+    };
   }
 
   await saveMeal(meal);
